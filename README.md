@@ -1,6 +1,6 @@
 # test0001
 
-A new Flutter project.
+This is a project of my personal client, use flutter dev
 
 ## Getting Started
 
