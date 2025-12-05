@@ -1,11 +1,47 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:test0001/pages/MusicDebugPage.dart';
+import 'package:test0001/pages/music_page.dart';
+import 'dart:io';
+
+import 'package:test0001/pages/photos_page.dart';
+import 'package:test0001/tabs/diary_tab.dart';
+import 'package:test0001/tabs/music_tab.dart';
+import 'package:test0001/tabs/photo_tab.dart';
 
 
 
 void main() {
   runApp(const MyApp());
+  //httpRequest();
+  //dioGetHttp();
 }
+
+
+
+// void dioGetHttp() async {
+//   //final response = await dio.get('https://dart.dev');
+//   final response = await dio.get('http://192.168.50.227:8080/user/2');
+//   print("archer；  == $response");
+// }
+
+
+Future<void> httpRequest() async {
+  //request http
+  String url = 'http://www.baidu.com';
+  //String url = 'http://192.168.50.227:8080/user/2';
+  HttpClient client = HttpClient();
+  HttpClientRequest request = await client.getUrl(Uri.parse(url));
+  HttpClientResponse response = await request.close();
+  print(response.statusCode);
+  var result = await response.transform(utf8.decoder).join();
+  print(result);
+  client.close();
+}
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -75,6 +111,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     'https://picsum.photos/400/400',
     'https://picsum.photos/400/500', // 故意不同高，测试网格适配
     'https://picsum.photos/400/300',
+    'https://picsum.photos/id/3/200',
+    'https://picsum.photos/id/1/200',
+    'https://picsum.photos/id/1/200',
     // 替换为 unsplash 随机图（丰富图片内容）
     'https://source.unsplash.com/random/400x400?nature', // 限定自然风景
     'https://source.unsplash.com/random/400x500?city',  // 限定城市
@@ -89,6 +128,26 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     },
     {
       'title': '学习Flutter的第30天',
+      'content': '终于掌握了TabBar和ListView的结合使用...',
+      'date': '2025-09-15'
+    },
+    {
+      'title': '学习Flutter的第29天',
+      'content': '终于掌握了TabBar和ListView的结合使用...',
+      'date': '2025-09-15'
+    },
+    {
+      'title': '学习Flutter的第28天',
+      'content': '终于掌握了TabBar和ListView的结合使用...',
+      'date': '2025-09-15'
+    },
+    {
+      'title': '学习Flutter的第14天',
+      'content': '终于掌握了TabBar和ListView的结合使用...',
+      'date': '2025-09-15'
+    },
+    {
+      'title': '学习Flutter的第1天',
       'content': '终于掌握了TabBar和ListView的结合使用...',
       'date': '2025-09-15'
     },
@@ -209,119 +268,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               child: TabBarView(
                 controller: _tabController,
                   children: [
-                    //music tab
-                    ListView.separated(
-                        padding: const EdgeInsets.all(16),
-                        separatorBuilder: (context,index) => const Divider(height: 1,),
-                        itemCount: _musicList.length,
-                        itemBuilder: (context,index){
-                          final music = _musicList[index];
-                          return ListTile(
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                music['cover']!,
-                                width: 50,
-                                height: 50,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            title: Text(music['title']!),
-                            subtitle: Text(music['singer']!),
-                            trailing: const Icon(Icons.play_arrow,color: Color(0xFF6366F1),),
-                            onTap: (){
-                              //play music logic //TODO
-                            },
-                          );
-
-                        },
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: StaggeredGrid.count(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 16,
-                        crossAxisSpacing: 16,
-                        children: _photoList.map((photo) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              photo,
-                              fit: BoxFit.cover,
-                              height: 180,
-                              width: double.infinity,
-                              errorBuilder: (context,error,stackTrace){
-                                return Container(
-                                  color: Colors.grey[200],
-                                  child: const Icon(Icons.broken_image,color: Colors.grey,size: 40),
-                                );
-                              },
-                              loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return Container(
-                                  color: Colors.grey[200],
-                                  child: const Center(child: CircularProgressIndicator(color: Color(0xFF6366F1))),
-                                );
-                              },
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-
-                    //recording tab
-                    ListView.separated(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: _diaryList.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 16),
-                      itemBuilder: (context, index) {
-                        final diary = _diaryList[index];
-                        return Card(
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  diary['title']!,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFF1F2937),
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  diary['content']!,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFF6B7280),
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(height: 12),
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Text(
-                                    diary['date']!,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Color(0xFF9CA3AF),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-
-
+                    MusicTab(musicList: _musicList),
+                    PhotoTab(photoList: _photoList),
+                    DiaryTab(diaryList: _diaryList),
                   ])
           )
         ],
@@ -336,15 +285,30 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-                onPressed: (){},
-                icon: const Icon(Icons.settings,color: Color(0xFF6B7280)),
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PhotosPage()),
+                  );
+                },
+                icon: const Icon(Icons.photo,color: Color(0xFF6B7280)),
             ),
             IconButton(
-              onPressed: (){},
-              icon: const Icon(Icons.settings,color: Color(0xFF6B7280)),
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MusicPage()),
+                );
+              },
+              icon: const Icon(Icons.music_note,color: Color(0xFF6B7280)),
             ),
             IconButton(
-              onPressed: (){},
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MusicDebugPage()),
+                );
+              },
               icon: const Icon(Icons.settings,color: Color(0xFF6B7280)),
             )
           ],
