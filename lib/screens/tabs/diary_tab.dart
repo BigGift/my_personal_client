@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DiaryTab extends StatelessWidget {
+import '../../providers/file_providers.dart';
+
+class DiaryTab extends ConsumerWidget  {
   final List<Map<String, String>> diaryList;
 
   const DiaryTab({Key? key, required this.diaryList}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    // 监听文章列表状态
+   // final postListAsync = ref.watch(postListProvider);
+
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: diaryList.length,

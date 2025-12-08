@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:photo_view/photo_view.dart';
-import '../services/file_service.dart';
+import '../../data/models/file_info.dart';
+import '../../services/file_service.dart';
 
 
 class PhotosPage extends StatefulWidget {
