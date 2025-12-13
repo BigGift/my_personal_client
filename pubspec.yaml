@@ -42,6 +42,14 @@ dependencies:
   photo_view: ^0.14.0
   flutter_riverpod: ^2.5.1
   http: ^1.2.1
+  excel: ^2.1.0 # Excel 解析/生成（支持.xlsx/.xls）
+  sqflite_common_ffi: ^2.3.3
+  sqflite: ^2.3.0 # 本地数据库（SQLite）
+  path: ^1.8.3     # 数据库路径管理
+  file_picker: ^10.3.7  # 选择/导入 Excel 文件
+  fl_chart: ^0.65.0    # 曲线图表展示
+  permission_handler: ^12.0.1  # 读写权限申请（移动端）
+  open_filex: ^4.3.4   # 打开导出的 Excel 文件（跨平台）
 
 
 dev_dependencies:

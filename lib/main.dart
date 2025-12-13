@@ -2,21 +2,19 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:test0001/screens/pages/MusicDebugPage.dart';
-import 'package:test0001/screens/pages/music_page.dart';
 import 'package:test0001/screens/pages/my_home_page.dart';
-import 'package:test0001/screens/pages/photos_page.dart';
-import 'package:test0001/screens/tabs/diary_tab.dart';
 import 'dart:io';
-
-import 'package:test0001/screens/tabs/music_tab.dart';
-import 'package:test0001/screens/tabs/photo_tab.dart';
-
-
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 
 void main() {
+  // 初始化 sqflite_common_ffi
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    // 为桌面平台初始化 FFI
+    sqfliteFfiInit();
+    // 设置全局 databaseFactory
+    databaseFactory = databaseFactoryFfi;
+  }
   runApp(
     // Riverpod 全局作用域
     const ProviderScope(
@@ -75,10 +73,10 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.green),
+        colorScheme: .fromSeed(seedColor: Colors.blue.shade200),
         brightness: Brightness.light,
         useMaterial3: true,
-        scaffoldBackgroundColor: Colors.orange
+        scaffoldBackgroundColor: Colors.blue.shade400
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
       debugShowCheckedModeBanner: false,

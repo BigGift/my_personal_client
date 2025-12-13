@@ -6,6 +6,7 @@ import '../tabs/diary_tab.dart';
 import '../tabs/music_tab.dart';
 import '../tabs/photo_tab.dart';
 import 'MusicDebugPage.dart';
+import 'excel_health_page.dart';
 import 'music_page.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -125,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           background: Container(
             decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.lightGreen,Colors.green],
+                    colors: [Colors.white,Colors.blue],
                     begin:Alignment.topLeft,
                     end:Alignment.bottomRight
                 )
@@ -227,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               onPressed: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MusicPage()),
+                  MaterialPageRoute(builder: (context) => ExcelHealthPage()),
                 );
               },
               icon: const Icon(Icons.music_note,color: Color(0xFF6B7280)),

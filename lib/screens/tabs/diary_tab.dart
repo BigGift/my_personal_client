@@ -23,6 +23,7 @@ class DiaryTab extends ConsumerWidget  {
         return Card(
           elevation: 4,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          color:  Color(0xFF90CAF9),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
